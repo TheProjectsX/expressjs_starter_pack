@@ -4,12 +4,12 @@ import { Prisma } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 import { StatusCodes } from "http-status-codes";
-import ApiError from "../../errors/ApiErrors";
-import handleClientError from "../../errors/handleClientError";
-import handleValidationError from "../../errors/handleValidationError";
-import handleZodError from "../../errors/handleZodError";
-import { IGenericErrorMessage } from "../../interfaces/error";
-import config from "../../config";
+import ApiError from "@/shared/errors/api-error";
+import handleClientError from "@/shared/errors/handle-client-error";
+import handleValidationError from "@/shared/errors/handle-validation-error";
+import handleZodError from "@/shared/errors/handle-zod-error";
+import { IGenericErrorMessage } from "@/shared/interfaces/error.interface";
+import config from "@/config";
 
 const GlobalErrorHandler = (
     error: any,

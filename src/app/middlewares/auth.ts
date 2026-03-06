@@ -1,26 +1,20 @@
 import { NextFunction, Request, Response } from "express";
-
 import { JwtPayload, Secret } from "jsonwebtoken";
-import config from "../../config";
-
+import config from "@/config";
 import { StatusCodes } from "http-status-codes";
-import ApiError from "../../errors/ApiErrors";
-import { jwtHelpers } from "../../helpers/jwtHelpers";
-import prisma from "../../shared/prisma";
+import ApiError from "@/shared/errors/api-error";
+import { jwtHelpers } from "@/shared/helpers/jwt.helper";
+import prisma from "@/shared/utils/prisma";
 import { UserRole } from "@prisma/client";
 
-export type UserJwtPayload = {
+export type UserPayload = {
     id: string;
     email: string;
     role: UserRole;
 };
 
 const auth = (...roles: UserRole[]) => {
-    return async (
-        req: Request & { user?: JwtPayload },
-        res: Response,
-        next: NextFunction,
-    ) => {
+    return async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token = req.headers.authorization;
 

@@ -9,7 +9,7 @@ import GlobalErrorHandler from "./app/middlewares/globalErrorHandler";
 const app: Application = express();
 
 export const corsOptions = {
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -25,7 +25,7 @@ app.get("/", (req: Request, res: Response) => {
     res.send({
         success: true,
         message: "El Psy Congroo!",
-        server_name: "backend_starter_pack",
+        server_name: "expressjs_starter_pack",
         server_type: "WEB",
     });
 });

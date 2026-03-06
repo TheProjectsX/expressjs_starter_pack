@@ -1,13 +1,17 @@
 import { Server } from "http";
 import app from "./app";
 import config from "./config";
-import { getLocalIP } from "./utils/localIp";
+import { getLocalIP } from "./shared/utils/local-ip";
+import { initiateSuperAdmin } from "./app/setup/initiate-db";
 
 let server: Server;
 
 // Main function to start the server
-function main() {
+async function main() {
     try {
+        // Initialize database setup (like super admin)
+        await initiateSuperAdmin();
+
         server = app.listen(config.port, () => {
             const ip = getLocalIP();
             console.log(`\nServer is running on:
@@ -23,7 +27,7 @@ function main() {
 main();
 
 process.on("unhandledRejection", (err) => {
-    console.log(`😈 unhandledRejection is detected , shutting down ...`, err);
+    console.log(`Unhandled Rejection is detected , shutting down ...`, err);
     if (server) {
         server.close(() => {
             process.exit(1);
@@ -33,6 +37,6 @@ process.on("unhandledRejection", (err) => {
 });
 
 process.on("uncaughtException", () => {
-    console.log(`😈 uncaughtException is detected , shutting down ...`);
+    console.log(`Uncaught Exception is detected , shutting down ...`);
     process.exit(1);
 });

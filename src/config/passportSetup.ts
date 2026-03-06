@@ -1,8 +1,8 @@
 // import passport from "passport";
 // import { Strategy as GoogleStrategy, Profile } from "passport-google-oauth20";
-// import prisma from "../shared/prisma";
+// import prisma from "../shared/utils/prisma";
 // import { User, UserRole } from "@prisma/client";
-// import { hashPassword } from "../helpars/passwordHelpers";
+// import { hashPassword } from "../shared/helpers/password.helper";
 
 // passport.use(
 // 	new GoogleStrategy(
