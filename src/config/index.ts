@@ -12,10 +12,11 @@ const envSchema = z.object({
     DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
 
     // URL Configs
-    FRONTEND_URL: z.string().url().optional(),
-    BACKEND_URL: z.string().url().optional(),
-    BACKEND_UPLOADS_URL: z.string().url().optional(),
-    RESET_PASS_URL: z.string().url().optional(),
+    FRONTEND_URL: z.url().optional(),
+    BACKEND_URL: z.url().optional(),
+    BACKEND_UPLOADS_URL: z.url().optional(),
+    BACKEND_STREAM_URL: z.url().optional(),
+    RESET_PASS_URL: z.url().optional(),
 
     // JWT Configs
     JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
@@ -30,7 +31,7 @@ const envSchema = z.object({
     SMTP_PORT: z.string().default("587").transform(Number),
     SMTP_USER: z.string().optional(),
     SMTP_PASS: z.string().optional(),
-    SENDER_EMAIL: z.string().email().optional(),
+    SENDER_EMAIL: z.email().optional(),
 
     // Payment Configs
     STRIPE_SECRET_KEY: z.string().optional(),
@@ -43,7 +44,7 @@ const envSchema = z.object({
     PAYPAL_MODE: z.enum(["sandbox", "live"]).optional().default("sandbox"),
 
     SENDGRID_API_KEY: z.string().optional(),
-    SENDGRID_EMAIL: z.string().email().optional(),
+    SENDGRID_EMAIL: z.email().optional(),
 
     // AWS Configs
     AWS_ACCESS_KEY_ID: z.string().optional(),
@@ -61,7 +62,7 @@ const parsedEnv = envSchema.safeParse(process.env);
 if (!parsedEnv.success) {
     console.error(
         "❌ Invalid environment variables:",
-        parsedEnv.error.format(),
+        z.treeifyError(parsedEnv.error),
     );
     process.exit(1);
 }
@@ -77,6 +78,7 @@ export default {
         backend: env.BACKEND_URL,
         uploads: env.BACKEND_UPLOADS_URL,
         reset_pass: env.RESET_PASS_URL,
+        stream: env.BACKEND_STREAM_URL,
     },
     stripe: {
         secret_key: env.STRIPE_SECRET_KEY,
