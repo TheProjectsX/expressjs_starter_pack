@@ -10,3 +10,4 @@ uploads
 /generated/prisma
 
 /prisma/dbml
+.gitignore

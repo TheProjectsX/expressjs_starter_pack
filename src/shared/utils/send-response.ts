@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-const sendResponse = <T>(
+const sendResponse = (
     res: Response,
     payload: {
         success: boolean;
@@ -12,15 +12,15 @@ const sendResponse = <T>(
             total: number;
             totalPage: number;
         };
-        data?: T | null | undefined;
+        data?: unknown;
     },
 ) => {
     res.status(payload.statusCode).json({
         success: payload.success,
         statusCode: payload.statusCode,
         message: payload.message,
-        pagination: payload.pagination || null || undefined,
-        data: payload.data || null || undefined,
+        pagination: payload.pagination,
+        data: payload.data,
     });
 };
 
